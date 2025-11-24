@@ -163,8 +163,8 @@ fun AddLapTimeScreen(
             // Save button
             Button(
                 onClick = {
-                    val lapTimeString = "${minutes}:${seconds}:${millis}"
-                    onSaveLap(name, game, track, vehicle, lapTimeString)
+                    val lapTime = "${minutes}:${seconds}:${millis}"
+                    onSaveLap(name, game, track, vehicle, lapTime)
                     onBack()
                 },
                 modifier = Modifier
