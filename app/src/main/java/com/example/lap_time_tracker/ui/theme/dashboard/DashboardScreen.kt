@@ -1,0 +1,110 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
+package com.example.lap_time_tracker.ui.theme.dashboard
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+
+
+@Composable
+fun DashboardScreen(
+    onAddLapClick: () -> Unit,
+    onLapListClick: () -> Unit,
+    onFavoritesClick: () -> Unit,
+    onMenuClick: () -> Unit,
+    onProfileClick: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "DELTAHUB",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onMenuClick) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = onProfileClick) {
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+                    }
+                }
+            )
+        },
+        containerColor = Color(0xFFD9D9D9)
+    ) { paddingValues ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            DashboardButton(
+                modifier = Modifier.fillMaxWidth(0.7f),
+                icon = Icons.Default.Add,
+                label = "Add Lap",
+                onClick = onAddLapClick
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DashboardButton(
+                    icon = Icons.Default.Folder,
+                    label = "Lap List",
+                    onClick = onLapListClick
+                )
+                DashboardButton(
+                    icon = Icons.Default.FavoriteBorder,
+                    label = "Favorites",
+                    onClick = onFavoritesClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun DashboardButton(
+    modifier: Modifier = Modifier,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    onClick: () -> Unit
+) {
+    ElevatedButton(
+        onClick = onClick,
+        modifier = modifier.height(90.dp),
+        shape = RoundedCornerShape(20.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF5A526F),
+            contentColor = Color.White
+        )
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(icon, contentDescription = label, modifier = Modifier.size(28.dp))
+            Spacer(Modifier.height(6.dp))
+            Text(label, fontSize = 14.sp)
+        }
+    }
+}
