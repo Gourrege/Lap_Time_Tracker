@@ -1,10 +1,12 @@
 package com.example.lap_time_tracker.ui.theme.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lap_time_tracker.ui.theme.dashboard.DashboardScreen
+import com.example.lap_time_tracker.ui.theme.addlap.AddLapTimeScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -26,7 +28,14 @@ fun AppNavHost(navController: NavHostController) {
 
         // These screens will be added next
         composable("addLap") {
-            // TODO: Add Lap Screen
+            AddLapTimeScreen(
+                onBack = { navController.popBackStack() },
+                onMenuClick = { /* later */ },
+                onProfileClick = { /* later */ },
+                onSaveLap = { name, game, track, vehicle, lapTimeString ->
+                    // TODO: Save to ROOM next step
+                }
+            )
         }
 
         composable("lapList") {

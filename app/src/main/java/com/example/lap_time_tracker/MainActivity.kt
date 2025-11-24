@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Lap_Time_TrackerTheme {
                 LapTimeApp()
-                //Check if works
+
 
             }
         }
