@@ -8,45 +8,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import androidx.navigation.NavController
+import com.example.lap_time_tracker.ui.theme.components.AppTopBar
 
 
 @Composable
 fun DashboardScreen(
-    onAddLapClick: () -> Unit,
-    onLapListClick: () -> Unit,
-    onFavoritesClick: () -> Unit,
-    onMenuClick: () -> Unit,
-    onProfileClick: () -> Unit
+    navController: NavController
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "DELTAHUB",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onProfileClick) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
-                    }
-                }
-            )
-        },
+        topBar = { AppTopBar(navController) },
         containerColor = Color(0xFFD9D9D9)
     ) { paddingValues ->
 
@@ -61,7 +42,7 @@ fun DashboardScreen(
                 modifier = Modifier.fillMaxWidth(0.7f),
                 icon = Icons.Default.Add,
                 label = "Add Lap",
-                onClick = onAddLapClick
+                onClick = {navController.navigate("addLap")}
             )
 
             Spacer(Modifier.height(32.dp))
@@ -73,12 +54,7 @@ fun DashboardScreen(
                 DashboardButton(
                     icon = Icons.Default.Folder,
                     label = "Lap List",
-                    onClick = onLapListClick
-                )
-                DashboardButton(
-                    icon = Icons.Default.FavoriteBorder,
-                    label = "Favorites",
-                    onClick = onFavoritesClick
+                    onClick = {navController.navigate("lapList")}
                 )
             }
         }

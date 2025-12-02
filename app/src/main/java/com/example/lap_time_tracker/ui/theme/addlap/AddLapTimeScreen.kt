@@ -15,13 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.lap_time_tracker.ui.theme.components.AppTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddLapTimeScreen(
+    navController: NavController,
     onBack: () -> Unit = {},
-    onMenuClick: () -> Unit = {},
-    onProfileClick: () -> Unit = {},
     onSaveLap: (String, String, String, String, String) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
@@ -137,27 +138,8 @@ fun AddLapTimeScreen(
     )
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "DELTAHUB",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onProfileClick) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
-                    }
-                }
-            )
-        }
+        topBar = { AppTopBar(navController) },
+        containerColor = Color(0xFFD9D9D9)
     ) { padding ->
 
         Column(

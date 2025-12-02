@@ -17,40 +17,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lap_time_tracker.data.LapTimeEntity
+import com.example.lap_time_tracker.ui.theme.components.AppTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LapListScreen(
+    navController: NavController,
     viewModel: LapListViewModel,
-    onMenuClick: () -> Unit,
-    onProfileClick: () -> Unit,
     onLapSelected: (LapTimeEntity) -> Unit
 ) {
     val lapList = viewModel.allLaps.collectAsState()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "DELTAHUB",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onProfileClick) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
-                    }
-                }
-            )
-        }
+        topBar = { AppTopBar(navController) },
+        containerColor = Color(0xFFD9D9D9)
     ) { padding ->
 
         Column(
@@ -73,12 +55,15 @@ fun LapListScreen(
 
                     LapCard(
                         lap = lap,
-                        onClick = { onLapSelected(lap) }
+                        onClick = { navController.navigate("lapDetails/${lap.id}") }
                     )
+
+
 
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+
         }
     }
 }
@@ -104,3 +89,4 @@ fun LapCard(lap: LapTimeEntity, onClick: () -> Unit) {
         Text(lap.vehicle)
     }
 }
+
