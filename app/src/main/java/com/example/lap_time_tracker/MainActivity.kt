@@ -15,7 +15,7 @@ import com.example.lap_time_tracker.ui.theme.Lap_Time_TrackerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContent {
             Lap_Time_TrackerTheme {
                 LapTimeApp()

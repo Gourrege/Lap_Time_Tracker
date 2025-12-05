@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.lap_time_tracker.ui.theme.components.AppTopBar
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.example.lap_time_tracker.R
 
 
 @Composable
@@ -38,6 +41,18 @@ fun DashboardScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Spacer(Modifier.height(40.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.logodh),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(300.dp)
+            )
+
+            Spacer(Modifier.height(40.dp))
+
+
             DashboardButton(
                 modifier = Modifier.fillMaxWidth(0.7f),
                 icon = Icons.Default.Add,
@@ -53,6 +68,8 @@ fun DashboardScreen(
                 label = "Lap List",
                 onClick = {navController.navigate("lapList")}
             )
+
+            Spacer(Modifier.weight(1f))
         }
     }
 }
@@ -69,7 +86,7 @@ private fun DashboardButton(
         modifier = modifier.height(90.dp),
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF5A526F),
+            containerColor = Color(0xFF003366),
             contentColor = Color.White
         )
     ) {

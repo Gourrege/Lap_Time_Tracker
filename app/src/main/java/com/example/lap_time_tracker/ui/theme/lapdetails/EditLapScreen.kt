@@ -72,7 +72,7 @@ fun EditLapScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF5A526F),
+                    containerColor = Color(0xFF003366),
                     contentColor = Color.White
                 )
             ) {

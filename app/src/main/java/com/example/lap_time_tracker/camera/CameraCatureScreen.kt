@@ -147,7 +147,7 @@ fun CameraCaptureScreen(
                 .height(56.dp), // ensures button height
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF5C5470),
+                containerColor = Color(0xFF003366),
                 contentColor = Color.White
             )
         ) {

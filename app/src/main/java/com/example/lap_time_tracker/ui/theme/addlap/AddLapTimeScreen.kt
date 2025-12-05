@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,26 +28,30 @@ fun AddLapTimeScreen(
     onBack: () -> Unit = {},
     onSaveLap: (String, String, String, String, String, String?) -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
 
-    var expandedGame by remember { mutableStateOf(false) }
-    var selectedGame by remember { mutableStateOf("") }
+    var expandedGame by rememberSaveable { mutableStateOf(false) }
+    var selectedGame by rememberSaveable { mutableStateOf("") }
 
-    var expandedTrack by remember { mutableStateOf(false) }
-    var selectedTrack by remember { mutableStateOf("") }
+    var expandedTrack by rememberSaveable { mutableStateOf(false) }
+    var selectedTrack by rememberSaveable { mutableStateOf("") }
 
-    var expandedVehicle by remember { mutableStateOf(false) }
-    var selectedVehicle by remember { mutableStateOf("") }
+    var expandedVehicle by rememberSaveable { mutableStateOf(false) }
+    var selectedVehicle by rememberSaveable { mutableStateOf("") }
 
-    var minutes by remember { mutableStateOf("") }
-    var seconds by remember { mutableStateOf("") }
-    var millis by remember { mutableStateOf("") }
+    var minutes by rememberSaveable { mutableStateOf("") }
+    var seconds by rememberSaveable { mutableStateOf("") }
+    var millis by rememberSaveable { mutableStateOf("") }
 
-    var imageUri by remember { mutableStateOf<String?>(null) }
+    var imageUri by rememberSaveable { mutableStateOf<String?>(null) }
 
     val savedState = navController.currentBackStackEntry?.savedStateHandle
-    savedState?.getLiveData<String>("capturedImage")?.observeForever {
-        imageUri = it
+
+    LaunchedEffect(savedState) {
+        savedState?.get<String>("capturedImage")?.let {
+            imageUri = it
+            savedState.remove<String>("capturedImage")  // prevents repeated updates
+        }
     }
 
 
@@ -164,9 +169,10 @@ fun AddLapTimeScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Add Lap Time",
+                text = "ADD LAP TIME",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF003366)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -337,7 +343,7 @@ fun AddLapTimeScreen(
                     .padding(horizontal = 32.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF5A526F),
+                    containerColor = Color(0xFF003366),
                     contentColor = Color.White
                 )
             ) {
@@ -356,13 +362,13 @@ fun AddLapTimeScreen(
                 onClick = {
                     val lapTime = "${minutes}:${seconds}:${millis}"
                     onSaveLap(name, selectedGame, selectedTrack, selectedVehicle, lapTime, imageUri)
-                    onBack()
+                    navController.navigate("lapList")
                 },
                 modifier = Modifier
                     .padding(horizontal = 32.dp)
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF5C5470),
+                    containerColor = Color(0xFF003366),
                     contentColor = Color.White
                 )
             ) {

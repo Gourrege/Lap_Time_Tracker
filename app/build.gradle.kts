@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation(libs.androidx.material3)
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
 
 

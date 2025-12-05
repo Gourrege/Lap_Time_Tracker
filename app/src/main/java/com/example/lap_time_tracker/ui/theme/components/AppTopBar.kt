@@ -12,6 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.example.lap_time_tracker.R
 
 @Composable
 fun AppTopBar(navController: NavController) {
@@ -20,13 +26,13 @@ fun AppTopBar(navController: NavController) {
 
     TopAppBar(
         title = {
-            Text(
-                text = "DELTAHUB",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp) // adjust the height if needed
             )
-            //onClick = {navController.navigate("dashboard")}
-
 
         },
 
@@ -72,7 +78,7 @@ fun AppTopBar(navController: NavController) {
 
         actions = {
             IconButton(onClick = { navController.navigate("settings") }) {
-                Icon(Icons.Default.AccountCircle, contentDescription = "Settings")
+                Icon(Icons.Default.Settings, contentDescription = "Settings")
             }
 
         }
