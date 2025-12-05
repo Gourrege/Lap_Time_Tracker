@@ -47,16 +47,12 @@ fun DashboardScreen(
 
             Spacer(Modifier.height(32.dp))
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                DashboardButton(
-                    icon = Icons.Default.Folder,
-                    label = "Lap List",
-                    onClick = {navController.navigate("lapList")}
-                )
-            }
+            DashboardButton(
+                modifier = Modifier.fillMaxWidth(0.7f),
+                icon = Icons.Default.Folder,
+                label = "Lap List",
+                onClick = {navController.navigate("lapList")}
+            )
         }
     }
 }

@@ -52,6 +52,17 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
+    // CameraX core
+    implementation("androidx.camera:camera-core:1.5.2")
+    implementation("androidx.camera:camera-camera2:1.5.2")
+// CameraX PreviewView support
+    implementation("androidx.camera:camera-view:1.5.2")
+// CameraX Extensions (optional, if you want HDR, Night Mode etc.)
+    implementation("androidx.camera:camera-extensions:1.5.2")
+    implementation(libs.androidx.camera.lifecycle)
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.androidx.material3)
+
 
 
     testImplementation(libs.junit)

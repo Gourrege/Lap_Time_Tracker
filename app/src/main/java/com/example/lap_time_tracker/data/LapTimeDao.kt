@@ -24,4 +24,7 @@ interface LapTimeDao {
 
     @Update
     suspend fun updateLap(lap: LapTimeEntity)
+
+    @Query("DELETE FROM lap_times WHERE timestamp < :cutoff")
+    suspend fun deleteOlderThan(cutoff: Long): Int
 }

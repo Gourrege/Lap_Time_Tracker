@@ -11,5 +11,6 @@ data class LapTimeEntity(
     val track: String,
     val vehicle: String,
     val lapTime: String,      // format: "1:24:34"
+    val imageUri: String? = null,
     val timestamp: Long = System.currentTimeMillis()
 )

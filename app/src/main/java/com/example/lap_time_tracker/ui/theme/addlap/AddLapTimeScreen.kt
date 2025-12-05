@@ -3,8 +3,10 @@ package com.example.lap_time_tracker.ui.theme.addlap
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -23,7 +25,7 @@ import com.example.lap_time_tracker.ui.theme.components.AppTopBar
 fun AddLapTimeScreen(
     navController: NavController,
     onBack: () -> Unit = {},
-    onSaveLap: (String, String, String, String, String) -> Unit
+    onSaveLap: (String, String, String, String, String, String?) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
 
@@ -39,6 +41,15 @@ fun AddLapTimeScreen(
     var minutes by remember { mutableStateOf("") }
     var seconds by remember { mutableStateOf("") }
     var millis by remember { mutableStateOf("") }
+
+    var imageUri by remember { mutableStateOf<String?>(null) }
+
+    val savedState = navController.currentBackStackEntry?.savedStateHandle
+    savedState?.getLiveData<String>("capturedImage")?.observeForever {
+        imageUri = it
+    }
+
+
 
     // --- GAME OPTIONS ---
     val gameOptions = listOf("F1 24", "Assetto Corsa")
@@ -223,7 +234,7 @@ fun AddLapTimeScreen(
                     label = { Text("Game") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedGame) },
                     modifier = Modifier
-                        .menuAnchor(MenuAnchorType.PrimaryNotEditable, enabled = true)
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp)
                 )
@@ -257,7 +268,7 @@ fun AddLapTimeScreen(
                     label = { Text("Track") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTrack) },
                     modifier = Modifier
-                        .menuAnchor(MenuAnchorType.PrimaryNotEditable, enabled = true)
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp)
                 )
@@ -292,7 +303,7 @@ fun AddLapTimeScreen(
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedVehicle) },
                     enabled = selectedGame.isNotEmpty(),
                     modifier = Modifier
-                        .menuAnchor(MenuAnchorType.PrimaryNotEditable, enabled = true)
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp)
                 )
@@ -317,11 +328,34 @@ fun AddLapTimeScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            //Camera Button
+            ElevatedButton(
+                onClick = { navController.navigate("cameraCapture") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 32.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF5A526F),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Take Photo"
+                )
+                Spacer(Modifier.width(8.dp))
+                Text("Take Photo")
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
             // Save button
             Button(
                 onClick = {
                     val lapTime = "${minutes}:${seconds}:${millis}"
-                    onSaveLap(name, selectedGame, selectedTrack, selectedVehicle, lapTime)
+                    onSaveLap(name, selectedGame, selectedTrack, selectedVehicle, lapTime, imageUri)
                     onBack()
                 },
                 modifier = Modifier
@@ -337,3 +371,4 @@ fun AddLapTimeScreen(
         }
     }
 }
+

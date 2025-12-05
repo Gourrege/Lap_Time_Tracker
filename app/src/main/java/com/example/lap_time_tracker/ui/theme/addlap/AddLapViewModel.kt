@@ -22,7 +22,8 @@ class AddLapViewModel(application: Application) : AndroidViewModel(application) 
         game: String,
         track: String,
         vehicle: String,
-        lapTime: String
+        lapTime: String,
+        imageUri: String?
     ) {
         viewModelScope.launch {
             val lap = LapTimeEntity(
@@ -30,7 +31,8 @@ class AddLapViewModel(application: Application) : AndroidViewModel(application) 
                 game = game,
                 track = track,
                 vehicle = vehicle,
-                lapTime = lapTime
+                lapTime = lapTime,
+                imageUri = imageUri
             )
             repository.insertLap(lap)
         }

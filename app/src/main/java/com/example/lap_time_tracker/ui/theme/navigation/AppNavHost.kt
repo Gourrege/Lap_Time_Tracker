@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.lap_time_tracker.camera.CameraCaptureScreen
 import com.example.lap_time_tracker.data.LapTimeEntity
 import com.example.lap_time_tracker.ui.theme.dashboard.DashboardScreen
 import com.example.lap_time_tracker.ui.theme.addlap.AddLapTimeScreen
@@ -15,6 +16,7 @@ import com.example.lap_time_tracker.ui.theme.lapdetails.EditLapScreen
 import com.example.lap_time_tracker.ui.theme.lapdetails.LapDetailsScreen
 import com.example.lap_time_tracker.ui.theme.laplist.LapListScreen
 import com.example.lap_time_tracker.ui.theme.laplist.LapListViewModel
+import com.example.lap_time_tracker.ui.theme.settings.SettingsScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -28,6 +30,10 @@ fun AppNavHost(navController: NavHostController) {
             DashboardScreen(navController)
         }
 
+        composable("settings") {
+            SettingsScreen(navController)
+        }
+
         // These screens will be added next
         composable("addLap") {
             val viewModel: AddLapViewModel = viewModel()
@@ -36,8 +42,8 @@ fun AppNavHost(navController: NavHostController) {
             AddLapTimeScreen(
                 navController,
                 onBack = { navController.popBackStack() },
-                onSaveLap = { name, game, track, vehicle, lapTime ->
-                    viewModel.saveLap(name, game,track,vehicle, lapTime )
+                onSaveLap = { name, game, track, vehicle, lapTime, imageUri ->
+                    viewModel.saveLap(name, game,track,vehicle, lapTime, imageUri )
 
                     navController.navigate("lapList"){
                         popUpTo("dashboard") {inclusive = false}
@@ -105,6 +111,18 @@ fun AppNavHost(navController: NavHostController) {
                 Text("Lap not found = $lapId")
             }
         }
+
+        composable("cameraCapture") {
+            CameraCaptureScreen(
+                navController = navController,
+                onPhotoCaptured = { uri ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("capturedImage", uri)
+                }
+            )
+        }
+
     }
 }
 

@@ -23,8 +23,11 @@ fun AppTopBar(navController: NavController) {
             Text(
                 text = "DELTAHUB",
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
+            //onClick = {navController.navigate("dashboard")}
+
+
         },
 
         navigationIcon = {
@@ -58,13 +61,6 @@ fun AppTopBar(navController: NavController) {
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Profile") },
-                    onClick = {
-                        menuExpanded = false
-                        navController.navigate("profile")
-                    }
-                )
-                DropdownMenuItem(
                     text = { Text("Settings") },
                     onClick = {
                         menuExpanded = false
@@ -75,9 +71,10 @@ fun AppTopBar(navController: NavController) {
         },
 
         actions = {
-            IconButton(onClick = { navController.navigate("profile") }) {
-                Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+            IconButton(onClick = { navController.navigate("settings") }) {
+                Icon(Icons.Default.AccountCircle, contentDescription = "Settings")
             }
+
         }
     )
 }
